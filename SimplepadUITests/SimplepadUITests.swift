@@ -56,11 +56,11 @@ final class SimplepadUITests: XCTestCase {
     func testClosingUntitledTabRequiresConfirmation() {
         app.menuBars.menuBarItems["File"].click()
         app.menuItems["Close Tab"].click()
-        let cancelButton = app.buttons["Cancel"]
-        XCTAssertTrue(cancelButton.waitForExistence(timeout: 3))
-        XCTAssertTrue(app.buttons["Close Tab"].exists)
+        let dialog = app.dialogs.firstMatch
+        XCTAssertTrue(dialog.waitForExistence(timeout: 3))
+        XCTAssertTrue(dialog.buttons["Close Tab"].exists)
 
-        cancelButton.click()
+        dialog.buttons["Cancel"].click()
         XCTAssertTrue(app.textViews["editor"].exists)
     }
 }
