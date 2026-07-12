@@ -77,7 +77,7 @@ struct PlainTextEditor: NSViewRepresentable {
             textView.textContainer?.widthTracksTextView = true
             textView.textContainer?.containerSize = NSSize(
                 width: scrollView.contentSize.width,
-                height: .greatestFiniteMagnitude
+                height: CGFloat.greatestFiniteMagnitude
             )
         } else {
             scrollView.hasHorizontalScroller = true
@@ -85,8 +85,8 @@ struct PlainTextEditor: NSViewRepresentable {
             textView.autoresizingMask = []
             textView.textContainer?.widthTracksTextView = false
             textView.textContainer?.containerSize = NSSize(
-                width: .greatestFiniteMagnitude,
-                height: .greatestFiniteMagnitude
+                width: CGFloat.greatestFiniteMagnitude,
+                height: CGFloat.greatestFiniteMagnitude
             )
         }
     }
