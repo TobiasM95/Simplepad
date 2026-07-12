@@ -37,7 +37,8 @@ private struct EditorPane: View {
                     set: { model.updateText(in: tab, to: $0) }
                 ),
                 wrapsLines: tab.wrapsLines,
-                fontSize: tab.fontSize
+                fontSize: tab.fontSize,
+                focusRequest: model.editorFocusRequest
             )
         }
     }

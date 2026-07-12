@@ -7,6 +7,7 @@ import UniformTypeIdentifiers
 final class AppModel: ObservableObject {
     @Published private(set) var tabs: [DocumentTab] = []
     @Published var selectedTabID: UUID?
+    @Published private(set) var editorFocusRequest = 0
 
     private let store: SessionStore
     private var untitledCounter = 0
@@ -28,10 +29,12 @@ final class AppModel: ObservableObject {
         let tab = DocumentTab(displayName: "Untitled \(untitledCounter)")
         tabs.append(tab)
         selectedTabID = tab.id
+        requestEditorFocus()
         persist()
     }
 
     func showOpenPanel() {
+        defer { requestEditorFocus() }
         let panel = NSOpenPanel()
         panel.title = "Open UTF-8 Text File"
         panel.canChooseDirectories = false
@@ -48,6 +51,7 @@ final class AppModel: ObservableObject {
             $0.filePathFallback.map { URL(fileURLWithPath: $0).standardizedFileURL.path } == normalizedPath
         }) {
             selectedTabID = existing.id
+            requestEditorFocus()
             return
         }
 
@@ -57,6 +61,7 @@ final class AppModel: ObservableObject {
             tab.applyOpenedFile(opened, url: url)
             tabs.append(tab)
             selectedTabID = tab.id
+            requestEditorFocus()
             persist()
         } catch {
             showError(title: "Couldn’t Open File", error: error)
@@ -70,6 +75,7 @@ final class AppModel: ObservableObject {
 
     func select(_ tab: DocumentTab) {
         selectedTabID = tab.id
+        requestEditorFocus()
         persist()
     }
 
@@ -249,6 +255,10 @@ final class AppModel: ObservableObject {
         guard let tab = selectedTab else { return }
         tab.fontSize = min(40, max(9, tab.fontSize + amount))
         persist()
+    }
+
+    private func requestEditorFocus() {
+        editorFocusRequest &+= 1
     }
 
     private func persist() {

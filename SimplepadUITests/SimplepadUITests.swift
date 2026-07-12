@@ -53,6 +53,17 @@ final class SimplepadUITests: XCTestCase {
         XCTAssertTrue((restoredEditor.value as? String)?.contains("persistent plain text") == true)
     }
 
+    func testEditorIsFocusedOnLaunchAndAfterCreatingTab() {
+        let editor = app.textViews["editor"]
+        XCTAssertTrue(editor.waitForExistence(timeout: 3))
+        app.typeText("startup focus")
+        XCTAssertTrue((editor.value as? String)?.contains("startup focus") == true)
+
+        app.typeKey("t", modifierFlags: .command)
+        app.typeText("new tab focus")
+        XCTAssertTrue((app.textViews["editor"].value as? String)?.contains("new tab focus") == true)
+    }
+
     func testClosingUntitledTabRequiresConfirmation() {
         app.menuBars.menuBarItems["File"].click()
         app.menuItems["Close Tab"].click()

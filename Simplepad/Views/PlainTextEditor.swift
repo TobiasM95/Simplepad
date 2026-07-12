@@ -12,6 +12,7 @@ struct PlainTextEditor: NSViewRepresentable {
     @Binding var text: String
     let wrapsLines: Bool
     let fontSize: Double
+    let focusRequest: Int
 
     func makeCoordinator() -> Coordinator {
         Coordinator(text: $text)
@@ -49,6 +50,8 @@ struct PlainTextEditor: NSViewRepresentable {
 
         scrollView.documentView = textView
         configureWrapping(textView: textView, scrollView: scrollView)
+        context.coordinator.lastFocusRequest = focusRequest
+        focus(textView)
         return scrollView
     }
 
@@ -67,6 +70,17 @@ struct PlainTextEditor: NSViewRepresentable {
         }
         textView.font = .monospacedSystemFont(ofSize: fontSize, weight: .regular)
         configureWrapping(textView: textView, scrollView: scrollView)
+        if context.coordinator.lastFocusRequest != focusRequest {
+            context.coordinator.lastFocusRequest = focusRequest
+            focus(textView)
+        }
+    }
+
+    private func focus(_ textView: NSTextView) {
+        DispatchQueue.main.async { [weak textView] in
+            guard let textView, let window = textView.window else { return }
+            window.makeFirstResponder(textView)
+        }
     }
 
     private func configureWrapping(textView: NSTextView, scrollView: NSScrollView) {
@@ -93,6 +107,7 @@ struct PlainTextEditor: NSViewRepresentable {
 
     final class Coordinator: NSObject, NSTextViewDelegate {
         private var text: Binding<String>
+        var lastFocusRequest = Int.min
 
         init(text: Binding<String>) {
             self.text = text
