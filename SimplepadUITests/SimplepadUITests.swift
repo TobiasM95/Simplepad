@@ -19,11 +19,11 @@ final class SimplepadUITests: XCTestCase {
     }
 
     func testNewTabShortcutCreatesAnotherTab() {
-        XCTAssertTrue(app.otherElements["tab-bar"].waitForExistence(timeout: 3))
+        XCTAssertTrue(app.textViews["editor"].waitForExistence(timeout: 3))
         app.typeKey("t", modifierFlags: .command)
 
-        let tabs = app.otherElements.matching(
-            NSPredicate(format: "identifier BEGINSWITH 'tab-'")
+        let tabs = app.buttons.matching(
+            NSPredicate(format: "identifier BEGINSWITH 'tab-select-'")
         )
         XCTAssertEqual(tabs.count, 2)
     }
@@ -54,13 +54,13 @@ final class SimplepadUITests: XCTestCase {
     }
 
     func testClosingUntitledTabRequiresConfirmation() {
-        app.typeKey("w", modifierFlags: .command)
-        let alert = app.alerts.firstMatch
-        XCTAssertTrue(alert.waitForExistence(timeout: 3))
-        XCTAssertTrue(alert.buttons["Cancel"].exists)
-        XCTAssertTrue(alert.buttons["Close Tab"].exists)
+        app.menuBars.menuBarItems["File"].click()
+        app.menuItems["Close Tab"].click()
+        let cancelButton = app.buttons["Cancel"]
+        XCTAssertTrue(cancelButton.waitForExistence(timeout: 3))
+        XCTAssertTrue(app.buttons["Close Tab"].exists)
 
-        alert.buttons["Cancel"].click()
+        cancelButton.click()
         XCTAssertTrue(app.textViews["editor"].exists)
     }
 }

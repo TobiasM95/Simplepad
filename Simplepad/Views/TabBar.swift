@@ -46,6 +46,7 @@ private struct TabButton: View {
                 .contentShape(Rectangle())
             }
             .buttonStyle(.plain)
+            .accessibilityIdentifier("tab-select-\(tab.id.uuidString)")
 
             Button(action: close) {
                 Image(systemName: "xmark")
@@ -70,4 +71,3 @@ private struct TabButton: View {
         .accessibilityIdentifier("tab-\(tab.id.uuidString)")
     }
 }
-
