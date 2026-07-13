@@ -34,7 +34,7 @@ private struct TabButton: View {
         HStack(spacing: 6) {
             Button(action: select) {
                 HStack(spacing: 5) {
-                    Text(tab.displayName)
+                    Text(tab.tabTitle)
                         .lineLimit(1)
                     if tab.isDirty {
                         Circle()
@@ -54,7 +54,7 @@ private struct TabButton: View {
                     .frame(width: 14, height: 14)
             }
             .buttonStyle(.plain)
-            .accessibilityLabel("Close \(tab.displayName)")
+            .accessibilityLabel("Close \(tab.tabTitle)")
         }
         .padding(.leading, 10)
         .padding(.trailing, 6)
