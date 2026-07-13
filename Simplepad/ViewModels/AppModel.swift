@@ -84,7 +84,7 @@ final class AppModel: ObservableObject {
         if tab.isDirty || !tab.hasDiskFile {
             let alert = NSAlert()
             alert.alertStyle = .warning
-            alert.messageText = "Close “\(tab.displayName)” and discard its buffer?"
+            alert.messageText = "Close “\(tab.tabTitle)” and discard its buffer?"
             alert.informativeText = "Closing this tab removes its persistent buffer. Quitting Simplepad would keep it for next time."
             alert.addButton(withTitle: "Close Tab")
             alert.addButton(withTitle: "Cancel")

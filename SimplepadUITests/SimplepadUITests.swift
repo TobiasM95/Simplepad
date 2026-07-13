@@ -64,6 +64,19 @@ final class SimplepadUITests: XCTestCase {
         XCTAssertTrue((app.textViews["editor"].value as? String)?.contains("new tab focus") == true)
     }
 
+    func testUnsavedTabTitleShowsFirstLineOfBuffer() {
+        let editor = app.textViews["editor"]
+        XCTAssertTrue(editor.waitForExistence(timeout: 3))
+        editor.click()
+        editor.typeText("Meeting notes\nagenda item")
+
+        let tab = app.buttons.matching(
+            NSPredicate(format: "identifier BEGINSWITH 'tab-select-'")
+        ).firstMatch
+        XCTAssertTrue(tab.label.contains("Meeting notes"))
+        XCTAssertFalse(tab.label.contains("agenda"))
+    }
+
     func testClosingUntitledTabRequiresConfirmation() {
         app.menuBars.menuBarItems["File"].click()
         app.menuItems["Close Tab"].click()

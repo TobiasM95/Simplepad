@@ -54,6 +54,19 @@ final class DocumentTab: ObservableObject, Identifiable {
         fileBookmark != nil || filePathFallback != nil
     }
 
+    /// File-backed tabs show their filename; unsaved buffers preview their first line.
+    var tabTitle: String {
+        guard !hasDiskFile else { return displayName }
+        let firstLine = text
+            .prefix(while: { !$0.isNewline })
+            .trimmingCharacters(in: .whitespaces)
+        guard !firstLine.isEmpty else { return displayName }
+        guard firstLine.count > Self.tabTitlePreviewLimit else { return firstLine }
+        return String(firstLine.prefix(Self.tabTitlePreviewLimit)) + "…"
+    }
+
+    static let tabTitlePreviewLimit = 30
+
     var record: TabRecord {
         TabRecord(
             id: id,
