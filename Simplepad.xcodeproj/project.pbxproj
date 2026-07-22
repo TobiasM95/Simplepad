@@ -18,10 +18,13 @@
 		E0000000000000000000000A /* TabBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0000000000000000000000A; };
 		E0000000000000000000000B /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0000000000000000000000B; };
 		E0000000000000000000000C /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = A0000000000000000000000C; };
+		E0000000000000000000000D /* MarkdownRenderer.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0000000000000000000000E; };
+		E0000000000000000000000E /* MarkdownPreview.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0000000000000000000000F; };
 		E00000000000000000000011 /* PlainTextCodecTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B00000000000000000000001; };
 		E00000000000000000000012 /* SessionStoreTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B00000000000000000000002; };
 		E00000000000000000000013 /* DocumentTabTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B00000000000000000000003; };
 		E00000000000000000000014 /* FileAccessTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B00000000000000000000004; };
+		E00000000000000000000015 /* MarkdownRendererTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B00000000000000000000005; };
 		E00000000000000000000021 /* SimplepadUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C00000000000000000000001; };
 /* End PBXBuildFile section */
 
@@ -44,10 +47,13 @@
 		A0000000000000000000000B /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		A0000000000000000000000C /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		A0000000000000000000000D /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		A0000000000000000000000E /* MarkdownRenderer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MarkdownRenderer.swift; sourceTree = "<group>"; };
+		A0000000000000000000000F /* MarkdownPreview.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MarkdownPreview.swift; sourceTree = "<group>"; };
 		B00000000000000000000001 /* PlainTextCodecTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlainTextCodecTests.swift; sourceTree = "<group>"; };
 		B00000000000000000000002 /* SessionStoreTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SessionStoreTests.swift; sourceTree = "<group>"; };
 		B00000000000000000000003 /* DocumentTabTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DocumentTabTests.swift; sourceTree = "<group>"; };
 		B00000000000000000000004 /* FileAccessTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FileAccessTests.swift; sourceTree = "<group>"; };
+		B00000000000000000000005 /* MarkdownRendererTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MarkdownRendererTests.swift; sourceTree = "<group>"; };
 		C00000000000000000000001 /* SimplepadUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SimplepadUITests.swift; sourceTree = "<group>"; };
 		D00000000000000000000001 /* Simplepad.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Simplepad.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		D00000000000000000000002 /* SimplepadTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = SimplepadTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -65,11 +71,11 @@
 		F00000000000000000000031 /* Simplepad */ = {isa = PBXGroup; children = (F00000000000000000000032, F00000000000000000000033, F00000000000000000000034, F00000000000000000000035, F00000000000000000000036, F00000000000000000000037); path = Simplepad; sourceTree = "<group>"; };
 		F00000000000000000000032 /* App */ = {isa = PBXGroup; children = (A00000000000000000000001, A00000000000000000000002); path = App; sourceTree = "<group>"; };
 		F00000000000000000000033 /* Models */ = {isa = PBXGroup; children = (A00000000000000000000003); path = Models; sourceTree = "<group>"; };
-		F00000000000000000000034 /* Services */ = {isa = PBXGroup; children = (A00000000000000000000004, A00000000000000000000005, A00000000000000000000006); path = Services; sourceTree = "<group>"; };
+		F00000000000000000000034 /* Services */ = {isa = PBXGroup; children = (A00000000000000000000004, A00000000000000000000005, A00000000000000000000006, A0000000000000000000000E); path = Services; sourceTree = "<group>"; };
 		F00000000000000000000035 /* ViewModels */ = {isa = PBXGroup; children = (A00000000000000000000007, A00000000000000000000008); path = ViewModels; sourceTree = "<group>"; };
-		F00000000000000000000036 /* Views */ = {isa = PBXGroup; children = (A00000000000000000000009, A0000000000000000000000A, A0000000000000000000000B); path = Views; sourceTree = "<group>"; };
+		F00000000000000000000036 /* Views */ = {isa = PBXGroup; children = (A00000000000000000000009, A0000000000000000000000A, A0000000000000000000000B, A0000000000000000000000F); path = Views; sourceTree = "<group>"; };
 		F00000000000000000000037 /* Resources */ = {isa = PBXGroup; children = (A0000000000000000000000C, A0000000000000000000000D); path = Resources; sourceTree = "<group>"; };
-		F00000000000000000000040 /* SimplepadTests */ = {isa = PBXGroup; children = (B00000000000000000000001, B00000000000000000000002, B00000000000000000000003, B00000000000000000000004); path = SimplepadTests; sourceTree = "<group>"; };
+		F00000000000000000000040 /* SimplepadTests */ = {isa = PBXGroup; children = (B00000000000000000000001, B00000000000000000000002, B00000000000000000000003, B00000000000000000000004, B00000000000000000000005); path = SimplepadTests; sourceTree = "<group>"; };
 		F00000000000000000000050 /* SimplepadUITests */ = {isa = PBXGroup; children = (C00000000000000000000001); path = SimplepadUITests; sourceTree = "<group>"; };
 		F00000000000000000000060 /* Products */ = {isa = PBXGroup; children = (D00000000000000000000001, D00000000000000000000002, D00000000000000000000003); name = Products; sourceTree = "<group>"; };
 /* End PBXGroup section */
@@ -89,8 +95,8 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
-		F00000000000000000000201 = {isa = PBXSourcesBuildPhase; buildActionMask = 2147483647; files = (E00000000000000000000001, E00000000000000000000002, E00000000000000000000003, E00000000000000000000004, E00000000000000000000005, E00000000000000000000006, E00000000000000000000007, E00000000000000000000008, E00000000000000000000009, E0000000000000000000000A, E0000000000000000000000B); runOnlyForDeploymentPostprocessing = 0; };
-		F00000000000000000000202 = {isa = PBXSourcesBuildPhase; buildActionMask = 2147483647; files = (E00000000000000000000011, E00000000000000000000012, E00000000000000000000013, E00000000000000000000014); runOnlyForDeploymentPostprocessing = 0; };
+		F00000000000000000000201 = {isa = PBXSourcesBuildPhase; buildActionMask = 2147483647; files = (E00000000000000000000001, E00000000000000000000002, E00000000000000000000003, E00000000000000000000004, E00000000000000000000005, E00000000000000000000006, E00000000000000000000007, E00000000000000000000008, E00000000000000000000009, E0000000000000000000000A, E0000000000000000000000B, E0000000000000000000000D, E0000000000000000000000E); runOnlyForDeploymentPostprocessing = 0; };
+		F00000000000000000000202 = {isa = PBXSourcesBuildPhase; buildActionMask = 2147483647; files = (E00000000000000000000011, E00000000000000000000012, E00000000000000000000013, E00000000000000000000014, E00000000000000000000015); runOnlyForDeploymentPostprocessing = 0; };
 		F00000000000000000000203 = {isa = PBXSourcesBuildPhase; buildActionMask = 2147483647; files = (E00000000000000000000021); runOnlyForDeploymentPostprocessing = 0; };
 /* End PBXSourcesBuildPhase section */
 

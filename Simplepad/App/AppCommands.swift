@@ -3,6 +3,7 @@ import SwiftUI
 
 struct AppCommands: Commands {
     @ObservedObject var model: AppModel
+    @Environment(\.openWindow) private var openWindow
 
     var body: some Commands {
         CommandGroup(replacing: .newItem) {
@@ -38,6 +39,9 @@ struct AppCommands: Commands {
                 get: { model.selectedTab?.wrapsLines ?? true },
                 set: { _ in model.toggleLineWrap() }
             ))
+            Divider()
+            Button("Markdown Preview") { openWindow(id: "markdown-preview") }
+                .keyboardShortcut("p", modifiers: [.command, .shift])
         }
 
         CommandGroup(replacing: .help) {

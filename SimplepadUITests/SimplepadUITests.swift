@@ -77,6 +77,27 @@ final class SimplepadUITests: XCTestCase {
         XCTAssertFalse(tab.label.contains("agenda"))
     }
 
+    func testMarkdownPreviewButtonOpensRenderedWindow() {
+        let editor = app.textViews["editor"]
+        XCTAssertTrue(editor.waitForExistence(timeout: 3))
+        editor.click()
+        editor.typeText("# Hello Preview\n\nSome **bold** text.\n\n- first\n- second")
+
+        app.buttons["markdown-preview-button"].click()
+
+        let preview = app.textViews["markdown-preview"]
+        XCTAssertTrue(preview.waitForExistence(timeout: 3))
+        let rendered = preview.value as? String
+        XCTAssertTrue(rendered?.contains("Hello Preview") == true)
+        XCTAssertFalse(rendered?.contains("# Hello") == true)
+        XCTAssertTrue(rendered?.contains("•  first") == true)
+
+        let attachment = XCTAttachment(screenshot: app.windows["Markdown Preview"].screenshot())
+        attachment.name = "markdown-preview-window"
+        attachment.lifetime = .keepAlways
+        add(attachment)
+    }
+
     func testClosingUntitledTabRequiresConfirmation() {
         app.menuBars.menuBarItems["File"].click()
         app.menuItems["Close Tab"].click()

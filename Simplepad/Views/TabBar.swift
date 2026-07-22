@@ -2,25 +2,40 @@ import SwiftUI
 
 struct TabBar: View {
     @ObservedObject var model: AppModel
+    @Environment(\.openWindow) private var openWindow
 
     var body: some View {
-        ScrollView(.horizontal, showsIndicators: false) {
-            HStack(spacing: 2) {
-                ForEach(model.tabs) { tab in
-                    TabButton(
-                        tab: tab,
-                        isSelected: model.selectedTabID == tab.id,
-                        select: { model.select(tab) },
-                        close: { model.requestClose(tab) }
-                    )
+        HStack(spacing: 0) {
+            ScrollView(.horizontal, showsIndicators: false) {
+                HStack(spacing: 2) {
+                    ForEach(model.tabs) { tab in
+                        TabButton(
+                            tab: tab,
+                            isSelected: model.selectedTabID == tab.id,
+                            select: { model.select(tab) },
+                            close: { model.requestClose(tab) }
+                        )
+                    }
                 }
+                .padding(.horizontal, 6)
+                .padding(.vertical, 5)
             }
-            .padding(.horizontal, 6)
-            .padding(.vertical, 5)
+            .accessibilityIdentifier("tab-bar")
+
+            Button {
+                openWindow(id: "markdown-preview")
+            } label: {
+                Image(systemName: "doc.richtext")
+                    .foregroundStyle(.secondary)
+            }
+            .buttonStyle(.plain)
+            .padding(.horizontal, 8)
+            .help("Markdown Preview (⇧⌘P)")
+            .accessibilityLabel("Markdown Preview")
+            .accessibilityIdentifier("markdown-preview-button")
         }
         .background(.bar)
         .overlay(alignment: .bottom) { Divider() }
-        .accessibilityIdentifier("tab-bar")
     }
 }
 

@@ -35,5 +35,11 @@ struct SimplepadApp: App {
         .commands {
             AppCommands(model: model)
         }
+
+        Window("Markdown Preview", id: "markdown-preview") {
+            MarkdownPreviewWindow(model: model)
+        }
+        .defaultSize(width: 500, height: 620)
+        .restorationBehavior(.disabled)
     }
 }
