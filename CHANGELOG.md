@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.1.0](https://github.com/TobiasM95/Simplepad/compare/v1.0.2...v1.1.0) (2026-07-22)
+
+
+### Features
+
+* add read-only markdown preview window ([536b0d7](https://github.com/TobiasM95/Simplepad/commit/536b0d7437beb37944d5075ffc1b089ba45dcf72))
+
 ## [1.0.2](https://github.com/TobiasM95/Simplepad/compare/v1.0.1...v1.0.2) (2026-07-13)
 
 
