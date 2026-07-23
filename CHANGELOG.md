@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.1.1](https://github.com/TobiasM95/Simplepad/compare/v1.1.0...v1.1.1) (2026-07-23)
+
+
+### Bug Fixes
+
+* render tables, heading rules, and smooth preview scrolling ([734047c](https://github.com/TobiasM95/Simplepad/commit/734047cb9b5d02549440739043f572f1691d3a2c))
+
 ## [1.1.0](https://github.com/TobiasM95/Simplepad/compare/v1.0.2...v1.1.0) (2026-07-22)
 
 
