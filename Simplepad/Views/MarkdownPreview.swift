@@ -63,19 +63,32 @@ private struct ReadOnlyAttributedTextView: NSViewRepresentable {
         scrollView.autohidesScrollers = true
         scrollView.drawsBackground = true
 
-        let textView = NSTextView()
+        // Explicit TextKit 1 stack: NSTextTable (tables, heading rules) needs
+        // it, and non-contiguous layout keeps scrolling smooth on long docs.
+        let storage = NSTextStorage()
+        let layoutManager = NSLayoutManager()
+        layoutManager.allowsNonContiguousLayout = true
+        storage.addLayoutManager(layoutManager)
+        let container = NSTextContainer(
+            containerSize: NSSize(width: 0, height: CGFloat.greatestFiniteMagnitude)
+        )
+        layoutManager.addTextContainer(container)
+
+        let textView = NSTextView(frame: .zero, textContainer: container)
         textView.isEditable = false
         textView.isSelectable = true
         textView.drawsBackground = true
         textView.backgroundColor = .textBackgroundColor
         textView.textContainerInset = NSSize(width: 16, height: 14)
+        textView.isVerticallyResizable = true
         textView.isHorizontallyResizable = false
         textView.autoresizingMask = [.width]
-        textView.textContainer?.widthTracksTextView = true
-        textView.textContainer?.containerSize = NSSize(
-            width: scrollView.contentSize.width,
+        textView.minSize = .zero
+        textView.maxSize = NSSize(
+            width: CGFloat.greatestFiniteMagnitude,
             height: CGFloat.greatestFiniteMagnitude
         )
+        textView.textContainer?.widthTracksTextView = true
         textView.setAccessibilityIdentifier("markdown-preview")
         textView.textStorage?.setAttributedString(content)
         context.coordinator.lastContent = content
@@ -87,8 +100,12 @@ private struct ReadOnlyAttributedTextView: NSViewRepresentable {
     func updateNSView(_ scrollView: NSScrollView, context: Context) {
         guard let textView = scrollView.documentView as? NSTextView else { return }
         if context.coordinator.lastContent !== content {
+            let offset = scrollView.contentView.bounds.origin
             textView.textStorage?.setAttributedString(content)
             context.coordinator.lastContent = content
+            if offset.y > 0 {
+                textView.scroll(offset)
+            }
         }
     }
 }

@@ -17,7 +17,7 @@ final class MarkdownRendererTests: XCTestCase {
 
     func testHeadingIsBoldAndLarger() throws {
         let rendered = MarkdownRenderer.render("# Title", baseFontSize: 13)
-        XCTAssertEqual(rendered.string, "Title")
+        XCTAssertEqual(rendered.string, "Title\n")
         let font = try XCTUnwrap(rendered.attribute(.font, at: 0, effectiveRange: nil) as? NSFont)
         XCTAssertGreaterThan(font.pointSize, 13)
         XCTAssertTrue(font.fontDescriptor.symbolicTraits.contains(.bold))
@@ -72,6 +72,47 @@ final class MarkdownRendererTests: XCTestCase {
             rendered.attribute(.foregroundColor, at: range.location, effectiveRange: nil) as? NSColor
         )
         XCTAssertEqual(color, NSColor.secondaryLabelColor)
+    }
+
+    func testLevelTwoHeadingGetsUnderlineRule() throws {
+        let rendered = MarkdownRenderer.render("## 1. Project identity")
+        let style = try XCTUnwrap(
+            rendered.attribute(.paragraphStyle, at: 0, effectiveRange: nil) as? NSParagraphStyle
+        )
+        XCTAssertEqual(style.textBlocks.count, 1)
+        XCTAssertTrue(rendered.string.hasSuffix("\n"))
+    }
+
+    func testLevelThreeHeadingHasNoUnderlineRule() throws {
+        let rendered = MarkdownRenderer.render("### Sub")
+        let style = try XCTUnwrap(
+            rendered.attribute(.paragraphStyle, at: 0, effectiveRange: nil) as? NSParagraphStyle
+        )
+        XCTAssertTrue(style.textBlocks.isEmpty)
+    }
+
+    func testTableRendersCellsAsTextTableBlocks() throws {
+        let rendered = MarkdownRenderer.render("| a | b |\n| - | - |\n| 1 | 2 |")
+        let text = rendered.string as NSString
+        for cell in ["a", "b", "1", "2"] {
+            XCTAssertNotEqual(text.range(of: cell).location, NSNotFound)
+        }
+
+        let headerStyle = try XCTUnwrap(
+            rendered.attribute(.paragraphStyle, at: text.range(of: "a").location, effectiveRange: nil)
+                as? NSParagraphStyle
+        )
+        let headerBlock = try XCTUnwrap(headerStyle.textBlocks.first as? NSTextTableBlock)
+        XCTAssertNotNil(headerBlock.backgroundColor)
+
+        let bodyStyle = try XCTUnwrap(
+            rendered.attribute(.paragraphStyle, at: text.range(of: "1").location, effectiveRange: nil)
+                as? NSParagraphStyle
+        )
+        let bodyBlock = try XCTUnwrap(bodyStyle.textBlocks.first as? NSTextTableBlock)
+        XCTAssertNil(bodyBlock.backgroundColor)
+        XCTAssertTrue(headerBlock.table === bodyBlock.table)
+        XCTAssertEqual(headerBlock.table.numberOfColumns, 2)
     }
 
     func testLinkAttributeIsCopied() throws {
