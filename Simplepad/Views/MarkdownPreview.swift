@@ -64,10 +64,11 @@ private struct ReadOnlyAttributedTextView: NSViewRepresentable {
         scrollView.drawsBackground = true
 
         // Explicit TextKit 1 stack: NSTextTable (tables, heading rules) needs
-        // it, and non-contiguous layout keeps scrolling smooth on long docs.
+        // it. Layout stays contiguous — lazy layout estimates heights for
+        // unlaid text and its corrections make scrolling jump and tear,
+        // especially with tables.
         let storage = NSTextStorage()
         let layoutManager = NSLayoutManager()
-        layoutManager.allowsNonContiguousLayout = true
         storage.addLayoutManager(layoutManager)
         let container = NSTextContainer(
             containerSize: NSSize(width: 0, height: CGFloat.greatestFiniteMagnitude)
@@ -94,6 +95,7 @@ private struct ReadOnlyAttributedTextView: NSViewRepresentable {
         context.coordinator.lastContent = content
 
         scrollView.documentView = textView
+        layoutManager.ensureLayout(for: container)
         return scrollView
     }
 
@@ -103,6 +105,9 @@ private struct ReadOnlyAttributedTextView: NSViewRepresentable {
             let offset = scrollView.contentView.bounds.origin
             textView.textStorage?.setAttributedString(content)
             context.coordinator.lastContent = content
+            if let container = textView.textContainer {
+                textView.layoutManager?.ensureLayout(for: container)
+            }
             if offset.y > 0 {
                 textView.scroll(offset)
             }
