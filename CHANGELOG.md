@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.1.2](https://github.com/TobiasM95/Simplepad/compare/v1.1.1...v1.1.2) (2026-07-24)
+
+
+### Bug Fixes
+
+* stop preview scroll jumping by keeping text layout contiguous ([c6a84a0](https://github.com/TobiasM95/Simplepad/commit/c6a84a071d4e1fc3e6c1243927ffe2b848ea3e4c))
+
 ## [1.1.1](https://github.com/TobiasM95/Simplepad/compare/v1.1.0...v1.1.1) (2026-07-23)
 
 
